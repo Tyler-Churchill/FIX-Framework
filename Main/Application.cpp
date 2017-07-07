@@ -125,12 +125,12 @@ void Application::mainLoop() {
 		update();
 		render();
 		SDL_GL_SwapWindow(window);
+		log(curTime);
 	} while (running);
 }
 void Application::update()
 {
 	game.update(delta);
-	//log(fps);
 }
 
 void Application::render()

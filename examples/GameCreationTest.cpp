@@ -26,6 +26,8 @@ public:
 	void render() 
 	{
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		// using fixed pipeline - probably not your intention but gets something drawn to see
+		// that your project/dev enviornment is working
 		glClearColor(1, 1, 1, 1);
 		glBegin(GL_TRIANGLES);                     // Drawing Using Triangles
 		glVertex3f(0.0f, 1.0f, 0.0f);              // Top

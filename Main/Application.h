@@ -37,15 +37,17 @@ protected:
 	ApplicationListener& game;
 	std::atomic_bool running;
 private:
+	/* Initializes the application with the current configuration passed into Application()*/
 	bool initialize();
+	/* Initializes OpenGL context. Returns true if successful.*/
 	bool initOpenGL();
 	Configuration configuration;
 	double delta{ 0 };
-	Uint16 frames{ 0 };
-	Uint32 startTime{ 0 };
-	Uint32 lastTime{ 0 };
-	Uint32 curTime{ 0 };
-	Uint16 fps;
+	unsigned frames{ 0 };
+	float startTime{ 0 };
+	float lastTime{ 0 };
+	float curTime{ 0 };
+	unsigned fps{ 0 };
 	SDL_Window *window{ nullptr };
 	SDL_GLContext glContext{ nullptr };
 	std::string FIX_VERSION {"0.0.1v"};
