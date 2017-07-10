@@ -20,16 +20,24 @@ Application::~Application()
 }
 
 bool Application::initialize() {
-	switch (configuration.renderer) 
+	int imgFlags = IMG_INIT_PNG;
+	if (!(IMG_Init(imgFlags) & imgFlags))
 	{
-	case Configuration::RENDER_ENGINE::OPENGL:
+		log(IMG_GetError()); return false;
+	}
+	if (configuration.renderer == RENDER_ENGINE::OPENGL)
+	{
 		if (!initOpenGL())
 		{
 			return false;
 		}
-		break; /* end OpenGL system initialization */
-	case Configuration::RENDER_ENGINE::SOFTWARE: default:
-		break; /* end Software system initialization */
+	}
+    if (configuration.renderer == RENDER_ENGINE::SOFTWARE)
+	{
+		if (!initSoftware())
+		{
+			return false;
+		}
 	}
 	running = true;
 	return true;
@@ -94,6 +102,22 @@ bool Application::initOpenGL() {
 	return true;
 }
 
+bool Application::initSoftware()
+{
+	const char * tempTitle = configuration.title.c_str();
+	window = window = SDL_CreateWindow(tempTitle, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, configuration.width, configuration.height, SDL_WINDOW_SHOWN);
+	if (window == nullptr)
+	{
+		log(SDL_GetError()); return false;
+	}
+	else
+	{
+		screenSurface = SDL_GetWindowSurface(window);
+		SDL_FillRect(screenSurface, 0, SDL_MapRGB(screenSurface->format, 0xFF, 0xFF, 0xFF));
+	}
+	return true;
+}
+
 void Application::mainLoop() {
 	// read user input
 	// animate actors
@@ -101,7 +125,7 @@ void Application::mainLoop() {
 	// run ai
 	// play music
 	game.create();
-	SDL_Event e;
+	InputEvent e;
 	do 
 	{
 		while (SDL_PollEvent(&e) != 0)
@@ -109,6 +133,17 @@ void Application::mainLoop() {
 			if (e.type == SDL_QUIT)
 			{
 				exit();
+			}
+			switch (e.type) {
+			case SDL_QUIT:
+				exit();
+				break;
+			case SDL_KEYDOWN: case SDL_KEYUP:
+				game.keyboardInput(e);
+				break;
+			case SDL_MOUSEMOTION: case SDL_MOUSEBUTTONDOWN: case SDL_MOUSEBUTTONUP: case SDL_MOUSEWHEEL:
+				game.mouseInput(e);
+				break;
 			}
 		}
 		curTime = SDL_GetTicks();
@@ -121,13 +156,19 @@ void Application::mainLoop() {
 			startTime = curTime;
 		}
 		frames++;
-		game.processInput(e);
 		update();
 		render();
-		SDL_GL_SwapWindow(window);
-		log(curTime);
+		if (configuration.renderer == RENDER_ENGINE::OPENGL)
+		{
+			SDL_GL_SwapWindow(window);
+		}
+		if (configuration.renderer == RENDER_ENGINE::SOFTWARE)
+		{
+			SDL_UpdateWindowSurface(window);
+		}
 	} while (running);
 }
+
 void Application::update()
 {
 	game.update(delta);
@@ -135,6 +176,5 @@ void Application::update()
 
 void Application::render()
 {
-	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	game.render();
 }

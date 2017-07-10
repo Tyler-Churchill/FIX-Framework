@@ -6,8 +6,8 @@
 #include <thread>
 #include <SDL.h>
 #include <GL\glew.h>
+#include <SDL_image.h>
 #include <SDL_opengl.h>
-#include <gl\GL.h>
 #include <gl\GLU.h>
 #include "ApplicationListener.h"
 
@@ -16,9 +16,13 @@
 	#define log(x) std::cout << x << std::endl
 #endif
 
+typedef SDL_Event InputEvent;
+typedef SDL_Keycode KeyCode;
+
+enum RENDER_ENGINE { OPENGL, SOFTWARE };
+
 struct Configuration {
-	enum RENDER_ENGINE { OPENGL, SOFTWARE };
-	std::string title { "FIX ENGINE" };
+	std::string title { "FIX FRAMEWORK" };
 	unsigned width{ 800u }, height{ 800u };
 	bool fullscreen{ false }, vSync{ false };
 	RENDER_ENGINE renderer{ RENDER_ENGINE::OPENGL };
@@ -41,15 +45,18 @@ private:
 	bool initialize();
 	/* Initializes OpenGL context. Returns true if successful.*/
 	bool initOpenGL();
+	/* Initializes the software rendering context. Return true if successful. */
+	bool initSoftware();
 	Configuration configuration;
 	double delta{ 0 };
-	unsigned frames{ 0 };
-	float startTime{ 0 };
-	float lastTime{ 0 };
-	float curTime{ 0 };
-	unsigned fps{ 0 };
+	uint32_t frames{ 0 };
+	uint32_t startTime{ 0 };
+	uint32_t lastTime{ 0 };
+	uint32_t curTime{ 0 };
+	uint32_t fps{ 0 };
 	SDL_Window *window{ nullptr };
 	SDL_GLContext glContext{ nullptr };
+	SDL_Surface *screenSurface{ nullptr };
 	std::string FIX_VERSION {"0.0.1v"};
 };
 

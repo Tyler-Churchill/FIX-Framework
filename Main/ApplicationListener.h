@@ -1,5 +1,4 @@
 #pragma once
-#include <SDL_events.h>
 class ApplicationListener
 {
 public:
@@ -10,8 +9,10 @@ public:
 	virtual void resize(unsigned width, unsigned height) = 0;
 	/* Called once per frame. Parameter: time between frames (ms) */
 	virtual void update(double delta) = 0;
-	/* Called before update and render. Parameter: the input event */
-	virtual void processInput(SDL_Event& e) = 0;
+	/* Called before update and render. Parameter: the button that was pressed */
+	virtual void keyboardInput(SDL_Event& e) = 0;
+	/* Called before update and render. Parameter: a mouse event */
+	virtual void mouseInput(SDL_Event& e) = 0;
 	/* Runs in main thread. Do all rendering calls here. */
 	virtual void render() = 0;
 };
