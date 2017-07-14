@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _APPLICATION_H
+#define _APPLICATION_H
+
 #include <iostream>
 #include <string>
 #include <SDL.h>
@@ -9,6 +11,7 @@
 #include <SDL_image.h>
 #include <SDL_opengl.h>
 #include <gl\GLU.h>
+#include "AssetManager.h"
 #include "ApplicationListener.h"
 
 #define DEBUG 1
@@ -19,11 +22,11 @@
 typedef SDL_Event InputEvent;
 typedef SDL_Keycode KeyCode;
 
-enum RENDER_ENGINE { OPENGL, SOFTWARE };
+enum RENDER_ENGINE { OPENGL, COMPATIBILITY };
 
 struct Configuration {
 	std::string title { "FIX FRAMEWORK" };
-	unsigned width{ 800u }, height{ 800u };
+	unsigned width{ 800u }, height{ 800u }, inputPollingRate{ 10 }; // times per second
 	bool fullscreen{ false }, vSync{ false };
 	RENDER_ENGINE renderer{ RENDER_ENGINE::OPENGL };
 };
@@ -33,30 +36,32 @@ class Application
 public:
 	Application(ApplicationListener& game, Configuration& configuration);
 	~Application();
-	void exit() { running = false; };
+	void exit() { m_running = false; };
 protected:
 	void mainLoop();
 	void update();
 	void render();
-	ApplicationListener& game;
-	std::atomic_bool running;
+	ApplicationListener& m_game;
+	std::atomic_bool m_running;
 private:
 	/* Initializes the application with the current configuration passed into Application()*/
 	bool initialize();
-	/* Initializes OpenGL context. Returns true if successful.*/
+	/* Initializes OpenGL context rendering. Returns true if successful.*/
 	bool initOpenGL();
-	/* Initializes the software rendering context. Return true if successful. */
-	bool initSoftware();
-	Configuration configuration;
-	double delta{ 0 };
-	uint32_t frames{ 0 };
-	uint32_t startTime{ 0 };
-	uint32_t lastTime{ 0 };
-	uint32_t curTime{ 0 };
-	uint32_t fps{ 0 };
-	SDL_Window *window{ nullptr };
-	SDL_GLContext glContext{ nullptr };
-	SDL_Surface *screenSurface{ nullptr };
+	/* Initializes the SDL2 compatibility rendering (D3D, OpenGL, OpenGLES)  . Return true if successful. */
+	bool initCompatibility();
+	Configuration m_configuration;
+	AssetManager m_assetManager;
+	double m_delta{ 0 };
+	uint32_t m_frames{ 0 };
+	uint32_t m_startTime{ 0 };
+	uint32_t m_lastTime{ 0 };
+	uint32_t m_curTime{ 0 };
+	uint32_t m_fps{ 0 };
+	SDL_Window *m_window{ nullptr };
+	SDL_GLContext m_glContext{ nullptr };
+	SDL_Surface *m_screenSurface{ nullptr };
+	SDL_Renderer* m_renderer{ nullptr };
 	std::string FIX_VERSION {"0.0.1v"};
 };
-
+#endif

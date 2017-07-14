@@ -10,7 +10,7 @@ public:
 	void bind(unsigned);
 	virtual ~GLTexture();
 private:
-	GLuint texId;
-	unsigned width, height;
+	GLuint m_texId;
+	unsigned m_width, m_height;
 };
 

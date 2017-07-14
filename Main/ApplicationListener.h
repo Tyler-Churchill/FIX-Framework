@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _APPLICATIONLISTENER_H
+#define _APPLICATIONLISTENER_H
 class ApplicationListener
 {
 public:
@@ -16,4 +17,4 @@ public:
 	/* Runs in main thread. Do all rendering calls here. */
 	virtual void render() = 0;
 };
-
+#endif

@@ -44,9 +44,9 @@ Vec3& Vec3::sub(const Vec3& other)
 
 Vec3 & Vec3::cross(const Vec3 & other)
 {
-	float x = y * other.z - z * other.y;
-	float y = z * other.x - x * other.z;
-	float z = x * other.y - y * other.x;
+	x = y * other.z - z * other.y;
+	y = z * other.x - x * other.z;
+	z = x * other.y - y * other.x;
 	return *this;
 }
 

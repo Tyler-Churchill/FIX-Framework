@@ -9,8 +9,8 @@ GLTexture::GLTexture(const std::string& fileName)
 	{
 		std::cerr << "Texture load failed: " << loc << std::endl;
 	}
-	glGenTextures(1, &texId);
-	glBindTexture(GL_TEXTURE_2D, texId);
+	glGenTextures(1, &m_texId);
+	glBindTexture(GL_TEXTURE_2D, m_texId);
 	// width and height wrapping
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
@@ -25,10 +25,10 @@ void GLTexture::bind(unsigned n)
 {
 	SDL_assert(n >= 0 && n <= 31);
 	glActiveTexture(GL_TEXTURE0 + n);
-	glBindTexture(GL_TEXTURE_2D, texId);
+	glBindTexture(GL_TEXTURE_2D, m_texId);
 }
 
 GLTexture::~GLTexture()
 {
-	glDeleteTextures(1, &texId);
+	glDeleteTextures(1, &m_texId);
 }
