@@ -62,10 +62,10 @@
     <ClCompile Include="SceneTree.cpp">
       <Filter>Source Files\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\Tyler\Desktop\imgui.cpp">
+    <ClCompile Include="imgui.cpp">
       <Filter>Source Files\Editor</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\Tyler\Desktop\imgui_draw.cpp">
+    <ClCompile Include="imgui_draw.cpp">
       <Filter>Source Files\Editor</Filter>
     </ClCompile>
   </ItemGroup>
@@ -100,22 +100,22 @@
     <ClInclude Include="SceneTree.h">
       <Filter>Source Files\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\Tyler\Desktop\imconfig.h">
+    <ClInclude Include="imgui.h">
       <Filter>Source Files\Editor</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\Tyler\Desktop\imgui.h">
+    <ClInclude Include="imgui_internal.h">
       <Filter>Source Files\Editor</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\Tyler\Desktop\imgui_internal.h">
+    <ClInclude Include="stb_rect_pack.h">
       <Filter>Source Files\Editor</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\Tyler\Desktop\stb_rect_pack.h">
+    <ClInclude Include="imconfig.h">
       <Filter>Source Files\Editor</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\Tyler\Desktop\stb_textedit.h">
+    <ClInclude Include="stb_truetype.h">
       <Filter>Source Files\Editor</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\Tyler\Desktop\stb_truetype.h">
+    <ClInclude Include="stb_textedit.h">
       <Filter>Source Files\Editor</Filter>
     </ClInclude>
   </ItemGroup>
