@@ -30,6 +30,15 @@
     <Filter Include="Source Files\Scene">
       <UniqueIdentifier>{67f94f25-6f7e-4d32-a9de-b2d95610dc4f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Editor\Project">
+      <UniqueIdentifier>{143ec379-34fe-496a-b8a5-e94bebab8ddc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Editor\imgui">
+      <UniqueIdentifier>{57519fe3-11b0-4a29-af70-38a9470b7507}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Editor\Components">
+      <UniqueIdentifier>{5937dfba-2e35-4f04-a41d-0525d38381d9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp">
@@ -62,11 +71,23 @@
     <ClCompile Include="SceneTree.cpp">
       <Filter>Source Files\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="imgui.cpp">
+    <ClCompile Include="Editor.cpp">
       <Filter>Source Files\Editor</Filter>
     </ClCompile>
+    <ClCompile Include="Project.cpp">
+      <Filter>Source Files\Editor\Project</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui.cpp">
+      <Filter>Source Files\Editor\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui_demo.cpp">
+      <Filter>Source Files\Editor\imgui</Filter>
+    </ClCompile>
     <ClCompile Include="imgui_draw.cpp">
-      <Filter>Source Files\Editor</Filter>
+      <Filter>Source Files\Editor\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui_impl_sdl_gl3.cpp">
+      <Filter>Source Files\Editor\imgui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -100,22 +121,31 @@
     <ClInclude Include="SceneTree.h">
       <Filter>Source Files\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="imgui.h">
-      <Filter>Source Files\Editor</Filter>
-    </ClInclude>
-    <ClInclude Include="imgui_internal.h">
-      <Filter>Source Files\Editor</Filter>
-    </ClInclude>
-    <ClInclude Include="stb_rect_pack.h">
-      <Filter>Source Files\Editor</Filter>
+    <ClInclude Include="Project.h">
+      <Filter>Source Files\Editor\Project</Filter>
     </ClInclude>
     <ClInclude Include="imconfig.h">
-      <Filter>Source Files\Editor</Filter>
+      <Filter>Source Files\Editor\imgui</Filter>
     </ClInclude>
-    <ClInclude Include="stb_truetype.h">
-      <Filter>Source Files\Editor</Filter>
+    <ClInclude Include="imgui.h">
+      <Filter>Source Files\Editor\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui_impl_sdl_gl3.h">
+      <Filter>Source Files\Editor\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui_internal.h">
+      <Filter>Source Files\Editor\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="stb_rect_pack.h">
+      <Filter>Source Files\Editor\imgui</Filter>
     </ClInclude>
     <ClInclude Include="stb_textedit.h">
+      <Filter>Source Files\Editor\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="stb_truetype.h">
+      <Filter>Source Files\Editor\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor.h">
       <Filter>Source Files\Editor</Filter>
     </ClInclude>
   </ItemGroup>

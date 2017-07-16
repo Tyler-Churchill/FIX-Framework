@@ -54,6 +54,7 @@ bool Application::initOpenGL() {
 	} 
 	else 
 	{
+		glewInit();
 		int imgFlags = IMG_INIT_PNG;
 		if (!(IMG_Init(imgFlags) & imgFlags))
 		{
@@ -63,13 +64,14 @@ bool Application::initOpenGL() {
 		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
 		SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 		const char * tempTitle = m_configuration.title.c_str();
-		m_window = SDL_CreateWindow(tempTitle, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, m_configuration.width, m_configuration.height, SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN);
+		m_window = SDL_CreateWindow(tempTitle, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, m_configuration.width, m_configuration.height, SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
 		if (m_window == nullptr)
 		{
 			log(SDL_GetError()); return false;
 		}
 		else
 		{
+			SDL_SetWindowBordered(m_window, SDL_FALSE);
 			m_glContext = SDL_GL_CreateContext(m_window);
 			if (m_glContext == nullptr) 
 			{
@@ -99,6 +101,7 @@ bool Application::initOpenGL() {
 		}
 	}
 #if DEBUG
+	m_game.editorLog("---------------" + m_configuration.title + "---------------");
 	log("---------------" + m_configuration.title + "---------------");
 	std::cout << "    vendor: " << glGetString(GL_VENDOR) << std::endl;
 	std::cout << "  renderer: " << glGetString(GL_RENDERER) << std::endl;
@@ -129,14 +132,13 @@ bool Application::initCompatibility()
 			log(SDL_GetError()); return false;
 		}
 		const char * tempTitle = m_configuration.title.c_str();
-		m_window = SDL_CreateWindow(tempTitle, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, m_configuration.width, m_configuration.height, SDL_WINDOW_SHOWN);
+		m_window = SDL_CreateWindow(tempTitle, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, m_configuration.width, m_configuration.height, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
 		if (m_window == nullptr)
 		{
 			log(SDL_GetError()); return false;
 		}
 		else
 		{
-
 			m_renderer = SDL_CreateRenderer(m_window, -1, SDL_RENDERER_ACCELERATED);
 			if(m_renderer == nullptr)
 			{
@@ -159,25 +161,35 @@ void Application::mainLoop() {
 	// run ai
 	// play music
 	m_game.create();
+	m_game.resize(m_configuration.width, m_configuration.height);
 	InputEvent e;
 	do 
 	{
 		while (SDL_PollEvent(&e) != 0)
 		{
+			m_game.editorEvents(e);
 			if (e.type == SDL_QUIT)
 			{
 				exit();
 			}
-			switch (e.type) {
-			case SDL_QUIT:
-				exit();
-				break;
-			case SDL_KEYDOWN: case SDL_KEYUP:
-				m_game.keyboardInput(e);
-				break;
-			case SDL_MOUSEMOTION: case SDL_MOUSEBUTTONDOWN: case SDL_MOUSEBUTTONUP: case SDL_MOUSEWHEEL:
-				m_game.mouseInput(e);
-				break;
+			switch (e.type) 
+			{
+				case SDL_QUIT:
+					exit();
+					break;
+				case SDL_KEYDOWN: case SDL_KEYUP:
+					m_game.keyboardInput(e);
+					break;
+				case SDL_MOUSEMOTION: case SDL_MOUSEBUTTONDOWN: case SDL_MOUSEBUTTONUP: case SDL_MOUSEWHEEL:
+					m_game.mouseInput(e);
+					break;
+			}
+
+			switch(e.window.event)
+			{
+				case SDL_WINDOWEVENT_SIZE_CHANGED:
+					m_game.resize(e.window.data1, e.window.data2);
+					break;
 			}
 		}
 		m_curTime = SDL_GetTicks();

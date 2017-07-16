@@ -16,5 +16,7 @@ public:
 	virtual void mouseInput(SDL_Event& e) = 0;
 	/* Runs in main thread. Do all rendering calls here. */
 	virtual void render() = 0;
+	virtual void editorLog(std::string msg) = 0;
+	virtual void editorEvents(SDL_Event& e) = 0;
 };
 #endif

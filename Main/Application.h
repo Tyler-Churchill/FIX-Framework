@@ -26,8 +26,8 @@ enum RENDER_ENGINE { OPENGL, COMPATIBILITY };
 
 struct Configuration {
 	std::string title { "FIX FRAMEWORK" };
-	unsigned width{ 800u }, height{ 800u }, inputPollingRate{ 10 }; // times per second
-	bool fullscreen{ false }, vSync{ false };
+	unsigned width{ 1600 }, height{ 1000 }, inputPollingRate{ 10 }; // times per second
+	bool fullscreen{ false }, vSync{ true };
 	RENDER_ENGINE renderer{ RENDER_ENGINE::OPENGL };
 };
 
@@ -36,7 +36,9 @@ class Application
 public:
 	Application(ApplicationListener& game, Configuration& configuration);
 	~Application();
-	void exit() { m_running = false; };
+	inline SDL_Window* getWindow() { return m_window; }
+	inline const Configuration getConfiguration() const { return m_configuration; }
+	inline void exit() { m_running = false; };
 protected:
 	void mainLoop();
 	void update();
